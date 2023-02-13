@@ -22,7 +22,7 @@ class CarODM extends AbstractODM<ICar> {
 
   public async findById(id: string): Promise<ICar[] | undefined> {
     if (!isValidObjectId(id)) return undefined;
-    return this.model.find({ id });
+    return this.model.find({ _id: id });
   }
 }
 

@@ -40,12 +40,12 @@ class CarController {
     try {
       const car = await this.service.getById(id);
       if (car === undefined) {
-        return this.res.status(422).json({ meesage: 'Invalid mongo id' });
+        return this.res.status(422).json({ message: 'Invalid mongo id' });
       }
       if (car.length === 0) {
         return this.res.status(404).json({ message: 'Car not found' });
       }
-      return this.res.status(200).json(car);
+      return this.res.status(200).json(...car);
     } catch (error) {
       this.next(error);
     }
