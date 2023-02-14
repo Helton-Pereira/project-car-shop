@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { isValidObjectId, Schema } from 'mongoose';
 import IMotorcycle from '../Interfaces/IMotorcycle';
 import AbstractODM from './AbstractODM';
 
@@ -13,7 +13,16 @@ class MotorcycleODM extends AbstractODM<IMotorcycle> {
       category: { type: String, required: true },
       engineCapacity: { type: Number, required: true },
     });
-    super(schema, 'Car');
+    super(schema, 'Motorcycle');
+  }
+
+  public async findAll(): Promise<IMotorcycle[]> {
+    return this.model.find();
+  }
+
+  public async findById(id: string): Promise<IMotorcycle[] | undefined> {
+    if (!isValidObjectId(id)) return undefined;
+    return this.model.find({ _id: id });
   }
 }
 

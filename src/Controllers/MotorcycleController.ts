@@ -28,6 +28,28 @@ class MotorcycleController {
     const newMotorcycle = await this.service.createMotorcycle(motorcycle);
     return this.res.status(201).json(newMotorcycle);
   }
+
+  public async getAll() {
+    const motorcycles = await this.service.getAll();
+    return this.res.status(200).json(motorcycles);
+  }
+
+  public async getById() {
+    const { id } = this.req.params;
+
+    try {
+      const motorcycle = await this.service.getById(id);
+      if (motorcycle === undefined) {
+        return this.res.status(422).json({ message: 'Invalid mongo id' });
+      }
+      if (motorcycle.length === 0) {
+        return this.res.status(404).json({ message: 'Motorcycle not found' });
+      }
+      return this.res.status(200).json(...motorcycle);
+    } catch (error) {
+      this.next(error);
+    }
+  }
 }
 
 export default MotorcycleController;
